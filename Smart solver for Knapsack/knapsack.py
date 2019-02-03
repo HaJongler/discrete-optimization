@@ -62,47 +62,10 @@ def main():
                         stack.append((node + 1, False))
                         stack.append((node + 1, True))
 
-        # def dfsrecursive(self, index):
-        #     # Check if we even want to check this node
-        #     if self.upperbound < self.lowerbound: return
-        #     # Mark if used it or not
-        #     used = False
-        #     # If we do, then consider two cases: take it / don't take it
-        #     for take in (True, False):
-        #         if take:
-        #             # If we decide to take the item, we check if it's even possible (max_weight wise)
-        #             if self.acc_weight + self.data[index][0] <= self.max_weight:
-        #                 # If it's possible, we add the value to our accumulated value and the weight to accumulated weight
-        #                 self.acc_val += self.data[index][1]
-        #                 self.acc_weight += self.data[index][0]
-        #                 used = True
-        #                 # We then check if the new accumulated value is bigger than what we ever saw
-        #                 if self.lowerbound < self.acc_val:
-        #                     self.lowerbound = self.acc_val  # If yes, we update
-        #                 # And now if we are not at the end of the list, we DFS to the next node
-        #                 if index + 1 < len(self.data):
-        #                     self.dfsrecursive(index + 1)
-        #         else:  # If we choose to skip this node
-        #             # The uppercase value decreases
-        #             self.upperbound -= self.data[index][1]
-        #             # If we used it then subtract the added parameters
-        #             if used:
-        #                 self.acc_val -= self.data[index][1]
-        #                 self.acc_weight -= self.data[index][0]
-        #             # And now if we are not at the end of the list, we DFS to the next node
-        #             if index + 1 < len(self.data):
-        #                 self.dfsrecursive(index + 1)
-        #     # After coming back to the node, we return it's value to the upperbound
-        #     self.upperbound += self.data[index][1]
-        #     return self.lowerbound
-
-
     d = DFS(k['weight'], k['value'], k['weight_limit'])
-
     print(datetime.datetime.now())
     d.dfs()
     print(d.lowerbound)
-    # print(d.dfsrecursive(0))
     print(datetime.datetime.now())
 
 if __name__ == '__main__':
