@@ -1,0 +1,24 @@
+{
+    "builtinSolverConfigs": [
+    ],
+    "openFiles": [
+        "set-cover-test.mzn",
+        "set-cover-9.dzn",
+        "set-cover-25.dzn",
+        "set-cover-135.dzn",
+        "set-cover-450.dzn"
+    ],
+    "openTab": 0,
+    "projectFiles": [
+        "set-cover-135.dzn",
+        "set-cover-25.dzn",
+        "set-cover-450.dzn",
+        "set-cover-9.dzn",
+        "set-cover-test.mzn"
+    ],
+    "projectSolverConfigs": [
+    ],
+    "selectedBuiltinConfigId": "org.chuffed.chuffed",
+    "selectedBuiltinConfigVersion": "0.10.0",
+    "version": 105
+}
