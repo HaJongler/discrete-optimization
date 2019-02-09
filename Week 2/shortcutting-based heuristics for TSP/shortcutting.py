@@ -90,5 +90,6 @@ def main():
     print("Best path length: {}\nWorst path length: {}".format(best_path_length, worst_path_length))
     # Yes! The results depend on the starting node for DFS!
 
+
 if __name__ == '__main__':
     main()

@@ -1,9 +1,10 @@
 from collections import defaultdict
 
 import numpy as np
+from heapdict import heapdict
 from scipy.spatial.distance import euclidean
 from sklearn.neighbors import KDTree
-from heapdict import heapdict
+
 
 class TSP(object):
     def __init__(self):
@@ -138,6 +139,7 @@ class TSP(object):
 
         return mst
 
+
 def test_nn_different_start_nodes(tsp):
     mx = 0
     mn = np.inf
@@ -171,6 +173,7 @@ def main():
     # TSP_100  : MF
     # TSP_400  : NI
     # TSP_9432 : NI?
+
 
 if __name__ == '__main__':
     main()
