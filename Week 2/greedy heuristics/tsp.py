@@ -12,7 +12,7 @@ class TSP(object):
         self.nn = KDTree(self.data, metric='euclidean').query(self.data, k=self.n, return_distance=False)
 
     def read_data(self):
-        with open('tsp_100', 'rb') as f:
+        with open('../data/tsp_100', 'rb') as f:
             n = int(f.readline())
             data = np.asarray([[float(x) for x in row.split()] for row in f.readlines()])
             return n, data
