@@ -1,10 +1,8 @@
 % Define the problem's parameters
 int: n;                                                                % number of vertices
-array[1..(pow(2,n)-2)] of set of 1..n: subsets;                        % proper subsets of the vertices, excluding the empty set
 array[1..n,1..n] of float: matrix;                                     % cost matrix
 array[1..n,1..n] of var {0,1}: x;                                      % indicator of an edge existing in our TSP
 var float: path_cost = sum(i,j in 1..n)(matrix[i,j] * x[i,j]);         % variable to be minimized
-array[1..n] of var 1..n: u;                                            % MTZ variables
 
 % Define our goal
 solve minimize path_cost;
@@ -12,14 +10,15 @@ output ["\(path_cost)"];
 
 % Define our constraints
 constraint forall(i in 1..n)(
-  sum([x[i,j] | j in 1..n]) = 2
+  sum([x[i, j] | j in 1..n where i != j]) = 1
+  /\
+  sum([x[j, i] | j in 1..n where i != j]) = 1
 );                                                                     % This constraint return h.c. and disjoint cycles
 
+% Subtour constraints
+array[1..48] of set of int: subsets = [{1, 34}, {32, 2, 23}, {3, 6}, {4, 42, 47, 25, 28}, {9, 5}, {37, 7}, {8, 20}, {10, 11}, {43, 12}, {13, 31}, {36, 14}, {17, 45, 15}, {16, 39}, {18, 50}, {41, 19}, {26, 21}, {38, 22}, {24, 35}, {48, 27}, {29, 46}, {44, 30}, {33, 49}, {40, 51}, {1, 2, 3, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 48, 51}, {4, 47}, {10, 11, 29, 46}, {49, 18, 50, 33}, {42, 28}, {1, 34, 6}, {2, 4, 5, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 47, 48, 49, 50, 51}, {3, 29}, {10, 11, 46}, {25, 42}, {1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 23, 29, 33, 34, 36, 39, 40, 41, 43, 45, 46, 47, 49, 50, 51}, {32, 2}, {35, 37, 7, 42, 13, 48, 24, 25, 27, 28, 31}, {26, 21, 38}, {44, 22, 30}, {1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 24, 25, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51}, {2, 26, 21}, {8, 41, 20}, {32, 23}, {1, 3, 4, 5, 6, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 23, 29, 32, 33, 34, 36, 39, 40, 41, 45, 46, 47, 49, 50, 51}, {2, 35, 38, 7, 42, 43, 44, 12, 48, 21, 22, 24, 25, 26, 27, 28, 30, 31}, {37, 13}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51}, {16, 39, 15}, {17, 45}];
 constraint forall(S in subsets)(
   sum([x[i,j] | i,j in 1..n where (i in S) /\ not(j in S)]) >= 1
-);                                                                     % This constraint eliminates disjoint cycles
+);
 
-% MTZ constraints
-constraint u[1] = 1;
-constraint forall(i in 2..n)(u[i] > 1);
-constraint forall(i,j in 2..n where i != j)(u[i] - u[j] + n * x[i,j] <= n - 1);
+% I needed 48 subsets until it got one component.

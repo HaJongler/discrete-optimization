@@ -26,12 +26,7 @@ def subsets(s):
 
 
 def save_as_dzn(n, matrix):
-    data = {'n': n, 'matrix': matrix,
-            'subsets': [set(sub_set) for sub_set in subsets(range(1, n + 1)) if 0 < len(sub_set) < n]}
-    # Unfortunately we can not iterate over subsets in MiniZinc.
-    # (see: https://stackoverflow.com/questions/40367148/how-to-quantify-over-all-subsets-in-minizinc)
-    # That's why I have to generate all subsets in Python. It is really memory heavy and the
-    # only one that actually works is tsp_5.
+    data = {'n': n, 'matrix': matrix}
     pymzn.dict2dzn(data, fout='tsp_{}.dzn'.format(n))
 
 
