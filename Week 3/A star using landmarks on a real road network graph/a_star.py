@@ -4,9 +4,8 @@ from collections import defaultdict
 import numpy as np
 from heapdict import heapdict
 from scipy.spatial.distance import euclidean
-from tqdm import tqdm
 
-DEFAULT_LANDMARKS_QUANTITY = 0
+DEFAULT_LANDMARKS_QUANTITY = 10
 
 
 class AStar(object):
@@ -73,7 +72,7 @@ class AStar(object):
         logging.info("Calculating best bound")
         best_bound = -np.inf
         best_sssp = None
-        sssps = [self._dijkstra(landmark) for landmark in tqdm(landmarks) if landmark not in (source, dest)]
+        sssps = [self._dijkstra(landmark) for landmark in landmarks if landmark not in (source, dest)]
         for sssp in sssps:
             if sssp[dest] - sssp[source] > best_bound:
                 best_bound = sssp[dest] - sssp[source]
